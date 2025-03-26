@@ -43,7 +43,7 @@ function printJokes (printAll = true){
 }
 
 /*
- [    [0, chiste ] ,  [ 1, chiste] ,   [ 2  , chiste]    ]   <-- Array Princial (LocalStorage)
+ [    [0, chiste ] ,  [ 1, chiste] ,   [ 2  , chiste]   ]
 */
 
 function rmElement(i){
@@ -76,15 +76,20 @@ btnJoke.addEventListener("click", () => {
         let arrayChistes = [];
         let i = 0;
         if (localStorage.getItem("chistes")){
+            //Traemos el Local Storage y el indice del siguiente elemento
             chistes = localStorage.getItem("chistes");
             arrayChistes = JSON.parse(chistes);
             i = parseInt(localStorage.getItem("lastIndexJokes"));
             console.log(i);
         }
+        // Añadimos el ultimo elemento
         arrayChistes.push([i,data.value]);
+        // Guardamos el Local Storage
         localStorage.setItem("chistes", JSON.stringify(arrayChistes));
         localStorage.setItem("lastIndexJokes",i+1)
-        console.log(localStorage);
+        //console.log(localStorage);
+
+        // Mostramos por pantalla el ultimo elemento añadido
         printJokes(false);
    });
 })
