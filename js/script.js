@@ -88,11 +88,3 @@ btnJoke.addEventListener("click", () => {
         printJokes(false);
    });
 })
-
-
-//const btnEliminar = document.getElementById("eliminar");
-const btnEliminar = document.querySelector("#eliminar");
-
-btnEliminar.addEventListener("click", () =>{
-    console.log("hllo")
-})
