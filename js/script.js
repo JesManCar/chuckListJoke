@@ -7,6 +7,7 @@ const ENDPOINT = "https://api.chucknorris.io/jokes/random";
 function clearJokes (){
     listJoke.innerHTML ="";
     localStorage.removeItem("chistes");
+    localStorage.removeItem("lastIndexJokes");
 }
 
 clearAll.addEventListener("click", () => {
@@ -25,7 +26,7 @@ function printJokes (printAll = true){
             listJoke.innerHTML += `
             <li>
             <p>${element[1]}</p>
-            <button id="eliminar${i}" class="eliminar" onclick="rmElement(${i})">Eliminar</button>
+            <button id="eliminar${element[0]}" class="eliminar" onclick="rmElement(${element[0]})">Eliminar</button>
             </li>
             `
         });}
@@ -34,20 +35,15 @@ function printJokes (printAll = true){
             listJoke.innerHTML += `
             <li>
             <p>${arrayChistes[i][1]}</p>
-            <button id="eliminar${i}" class="eliminar" onclick="rmElement(${i})">Eliminar</button>
+            <button id="eliminar${arrayChistes[i][0]}" class="eliminar" onclick="rmElement(${arrayChistes[i][0]})">Eliminar</button>
             </li>
             `
         }
     }
 }
 
-
-//////
 /*
-
  [    [0, chiste ] ,  [ 1, chiste] ,   [ 2  , chiste]    ]   <-- Array Princial (LocalStorage)
-
-
 */
 
 function rmElement(i){
@@ -56,9 +52,14 @@ function rmElement(i){
     //TRAER LOCAL STORAGE
     chistes = localStorage.getItem("chistes");
     arrayChistes = JSON.parse(chistes);
-
-    const index = arrayChistes.indexOf()
-     
+    //BORRAMOS ELEMENTO
+    arrayChistes.forEach((element,j) => {
+        if (element[0]===i){
+            arrayChistes.splice(j,1)
+        }
+    })
+    //SUBIMOS NUEVO ARRAY AL LOCAL STORAGE
+    localStorage.setItem("chistes", JSON.stringify(arrayChistes));
 }
 
 printJokes();
@@ -77,10 +78,12 @@ btnJoke.addEventListener("click", () => {
         if (localStorage.getItem("chistes")){
             chistes = localStorage.getItem("chistes");
             arrayChistes = JSON.parse(chistes);
-            i = arrayChistes.length; //TODO: REFACTOR
+            i = parseInt(localStorage.getItem("lastIndexJokes"));
+            console.log(i);
         }
         arrayChistes.push([i,data.value]);
         localStorage.setItem("chistes", JSON.stringify(arrayChistes));
+        localStorage.setItem("lastIndexJokes",i+1)
         console.log(localStorage);
         printJokes(false);
    });
