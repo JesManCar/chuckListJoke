@@ -28,4 +28,10 @@ button:hover {
 }
 
 
+.eliminar{
+  background-color: #f72626;
+}
+.eliminar:hover {
+  background-color: #520000;
+}
 
